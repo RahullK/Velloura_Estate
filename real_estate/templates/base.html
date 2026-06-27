@@ -1,0 +1,287 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Real Estate Portal - Find Properties{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .logo-img {
+           width: 45px;
+           height: 45px;
+           object-fit: contain;
+           display: inline-block;
+           
+        }       
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header/Navigation */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+           font-size: 24px;
+           font-weight: bold;
+           color: #667eea;
+           text-decoration: none;
+           display: flex;
+           align-items: center;
+           gap: 10px;
+           margin-left: -280px;
+}       
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            padding: 10px 20px;
+            border: 2px solid #667eea;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 60px 20px 30px;
+            margin-top: 60px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .footer-section a {
+            display: block;
+            color: #ccc;
+            text-decoration: none;
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #667eea;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #374151;
+            padding-top: 20px;
+            text-align: center;
+            color: #999;
+        }
+
+        /* Messages */
+        .messages {
+            list-style: none;
+        }
+
+        .messages li {
+            padding: 15px 20px;
+            margin: 10px 0;
+            border-radius: 5px;
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .messages li.error {
+            background: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="{% url 'home' %}" class="logo" >
+                      <img src="{% static '/real_estate_startup/logo.png' %}" alt="" class="logo-img">
+                    <i class="" ></i> Velloura Estates
+                </a>
+                <!-- <ul class="nav-links"> -->
+                    <!-- <li><a href="{% url 'property_list' %}?listing_type=buy">Buy</a></li> -->
+                    <!-- <li><a href="{% url 'property_list' %}?listing_type=rent">Rent</a></li> -->
+                    <!-- <li><a href="{% url 'property_list' %}?property_type=commercial">Commercial</a></li> -->
+                    <!-- {% if user.is_authenticated %} -->
+                    <!-- <li><a href="{% url 'saved_properties' %}"><i class="fas fa-heart"></i> Saved</a></li> -->
+                    <!-- <li><a href="{% url 'admin:index' %}">Dashboard</a></li> -->
+                    <!-- {% endif %} -->
+                <!-- </ul> -->
+                <div class="auth-buttons">
+                    {% if user.is_authenticated %}
+                    <span style="margin-right: 15px;">Welcome, <strong>{{ user.username }}</strong></span>
+                    <a href="{% url 'admin:logout' %}" class="btn-secondary">Logout</a>
+                    {% else %}
+                    <a href="{% url 'admin:login' %}" class="btn-secondary">Login</a>
+                    <a href="{% url 'admin:index' %}" class="btn-primary">Admin</a>
+                    {% endif %}
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Messages -->
+    {% if messages %}
+    <div style="padding: 20px;">
+        <div class="container">
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %}class="{{ message.tags }}"{% endif %}>
+                    {{ message }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>About Us</h3>
+                    <p style="color: #ccc; margin-bottom: 15px;">Your trusted platform for finding the perfect property. Browse thousands of listings across multiple cities.</p>
+                    <div style="display: flex; gap: 15px;">
+                        <a href="#" style="display: inline-block;"><i class="fab fa-facebook-f" style="color: #667eea; font-size: 18px;"></i></a>
+                        <a href="#" style="display: inline-block;"><i class="fab fa-twitter" style="color: #667eea; font-size: 18px;"></i></a>
+                        <a href="#" style="display: inline-block;"><i class="fab fa-linkedin-in" style="color: #667eea; font-size: 18px;"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="{% url 'property_list' %}">Browse Properties</a>
+                    <a href="{% url 'property_list' %}?listing_type=buy">Buy Property</a>
+                    <a href="{% url 'property_list' %}?listing_type=rent">Rent Property</a>
+                    <a href="#">About</a>
+                    <a href="#">Contact</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Browse by Type</h3>
+                    <a href="{% url 'property_list' %}?property_type=apartment">Apartments</a>
+                    <a href="{% url 'property_list' %}?property_type=villa">Villas</a>
+                    <a href="{% url 'property_list' %}?property_type=plot">Plots & Land</a>
+                    <a href="{% url 'property_list' %}?property_type=commercial">Commercial</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p style="color: #ccc; margin-bottom: 10px;"><i class="fas fa-phone"></i> +91-7768988025</p>
+                    <p style="color: #ccc; margin-bottom: 10px;"><i class="fas fa-envelope"></i> vellouraestates@gmail.com</p>
+                    <p style="color: #ccc;"><i class="fas fa-map-marker-alt"></i> Pune, India</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Velloura Estate. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+</body> 
+</html>

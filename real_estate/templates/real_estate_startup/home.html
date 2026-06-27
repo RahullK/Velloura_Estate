@@ -1,0 +1,318 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home - Real Estate Portal - Find Your Dream Property{% endblock %}
+
+{% block extra_css %}
+<style>
+.hero-slider-section {
+    background: #000;
+    padding: 0;
+}
+.hero-slider {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    box-shadow: none;
+}
+.hero-slider .slider-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 360px;
+    overflow: hidden;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.hero-slider img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    /* Make sure the image can’t leave blank space and always matches the wrapper box */
+    display: block;
+    margin: 0;
+    padding: 0;
+
+    opacity: 1;
+    transition: opacity 0.35s ease-in-out;
+    background: #000;
+}
+.hero-slider .slider-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0,0,0,0.45);
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+.hero-slider .slider-nav.prev {
+    left: 20px;
+}
+.hero-slider .slider-nav.next {
+    right: 20px;
+}
+.hero-slider .slider-controller {
+    display: none;
+}
+.hero-slider .slider-caption {
+    display: none;
+}
+@media (max-width: 768px) {
+    .hero-slider .slider-nav {
+        width: 38px;
+        height: 38px;
+        font-size: 1.2rem;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Slider Section -->
+<section class="hero-slider-section">
+    <div class="hero-slider">
+        <div class="slider-image-wrapper">
+            <img id="heroSliderImage" src="{% static 'real_estate_startup/chatgpt.png' %}" alt="Hero slider image">
+            <button type="button" id="sliderPrev" class="slider-nav prev">‹</button>
+            <button type="button" id="sliderNext" class="slider-nav next">›</button>
+        </div>
+    </div>
+</section>
+
+<!-- Find Your Dream Property Section -->
+<section style="background: white; padding: 50px 20px; text-align: center; border-bottom: 1px solid #eee;">
+    <div class="container">
+        <h2 style="font-size: 36px; margin-bottom: 10px; font-weight: bold;">Find Your Dream Property</h2>
+        <p style="color: #666; font-size: 16px; margin-bottom: 40px;">Discover 10+ verified properties</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; max-width: 900px; margin: 0 auto;">
+            <div style="padding: 20px;">
+                <div style="font-size: 48px; margin-bottom: 15px;">🏠</div>
+                <h3 style="font-size: 20px; margin-bottom: 10px; font-weight: bold;">Buy</h3>
+                <p style="color: #666; font-size: 14px;">Find your ideal home or investment property</p>
+            </div>
+            <div style="padding: 20px;">
+                <div style="font-size: 48px; margin-bottom: 15px;">🔑</div>
+                <h3 style="font-size: 20px; margin-bottom: 10px; font-weight: bold;">Rent</h3>
+                <p style="color: #666; font-size: 14px;">Explore rental properties that fit your budget</p>
+            </div>
+            <div style="padding: 20px;">
+                <div style="font-size: 48px; margin-bottom: 15px;">🏢</div>
+                <h3 style="font-size: 20px; margin-bottom: 10px; font-weight: bold;">Commercial</h3>
+                <p style="color: #666; font-size: 14px;">Discover commercial spaces for your business</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Search Section -->
+<section style="background: #f8f9fa; padding: 40px 20px 40px; margin-top: 0; text-align: center; box-shadow: none; position: relative; z-index: 1;">
+    <div class="container">
+        <!-- Main Search Form -->
+        <form method="GET" action="{% url 'property_list' %}" style="background: rgba(255,255,255,0.95); border: 1px solid rgba(204,204,204,0.6); padding: 30px; border-radius: 20px; max-width: 1200px; margin: 0 auto;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 150px; gap: 15px; margin-bottom: 20px;">
+                <div>
+                    <input type="text" name="q" placeholder="Search by location or property" style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; background: white;">
+                </div>
+                <div>
+                    <select name="listing_type" style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; background: white;">
+                        <option value="buy">Buy</option>
+                        <option value="rent">Rent</option>
+                        <option value="commercial">Commercial</option>
+                    </select>
+                </div>
+                <div>
+                    <select name="area" style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; background: white;">
+                        <option value="">All Areas</option>
+                            <option value="hinjewadi">Hinjewadi</option>
+                            <option value="wakad">Wakad</option>
+                            <option value="tathawade">Tathawade</option>
+                            <option value="ravet">Ravet</option>
+                            <option value="punawale">Punawale</option>
+                            <option value="pimple_saudagar">Pimple Saudagar</option>
+                            <option value="pimple_gurav">Pimple Gurav</option>
+                            <option value="sangvi">Sangvi</option>
+                            <option value="nigdi">Nigdi</option>
+                            <option value="pradhikaran">Pradhikaran</option>
+                            <option value="akurdi">Akurdi</option>
+                            <option value="chinchwad">Chinchwad</option>
+                            <option value="pimpri">Pimpri</option>
+                            <option value="kalewadi">Kalewadi</option>
+                            <option value="rahatani">Rahatani</option>
+                            <option value="thergaon">Thergaon</option>
+                            <option value="moshi">Moshi</option>
+                            <option value="charholi">Charholi</option>
+                            <option value="dighi">Dighi</option>
+                            <option value="bhosari">Bhosari</option>
+                            <option value="talawade">Talawade</option>
+                            <option value="chikhali">Chikhali</option>
+                            <option value="kiwale">Kiwale</option>
+                            <option value="mamurdi">Mamurdi</option>
+                            <option value="dehu_road">Dehu Road</option>
+                            <option value="spine_road">Spine Road</option>
+                            <option value="rupinagar">Rupinagar</option>
+                            <option value="yamunanagar">Yamunanagar</option>
+                            <option value="bhosari_midc">Bhosari MIDC</option>
+                    </select>
+                </div>
+                <button type="submit" style="background: #667eea; color: white; border: none; padding: 12px 30px; border-radius: 5px; font-size: 14px; font-weight: bold; cursor: pointer;">Search</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- Featured Properties -->
+{% if featured_properties %}
+<section style="padding: 60px 20px;">
+    <div class="container">
+        <h2 style="margin-bottom: 40px; font-size: 32px;">Featured Properties</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px;">
+            {% for property in featured_properties %}
+            <a href="{% url 'property_detail' property.id %}" style="text-decoration: none; color: inherit;">
+                <div style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s;">
+                    <div style="position: relative; height: 250px; overflow: hidden;">
+                        {% if property.images.first %}
+                        <img src="{{ property.images.first.image.url }}" alt="{{ property.title }}" style="width: 100%; height: 100%; object-fit: cover;">
+                        {% else %}
+                        <img src="https://via.placeholder.com/280x250?text=No+Image" alt="{{ property.title }}" style="width: 100%; height: 100%; object-fit: cover;">
+                        {% endif %}
+                        <span style="position: absolute; top: 10px; right: 10px; background: #667eea; color: white; padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: bold;">{{ property.get_property_type_display }}</span>
+                        <span style="position: absolute; bottom: 10px; left: 10px; background: rgba(0,0,0,0.7); color: white; padding: 8px 15px; border-radius: 5px; font-size: 18px; font-weight: bold;">₹{{ property.price|floatformat:0|stringformat:".0f" }}</span>
+                    </div>
+                    <div style="padding: 20px;">
+                        <h3 style="margin: 0 0 10px 0; font-size: 18px; font-weight: bold;">{{ property.title|truncatechars:35 }}</h3>
+                        <p style="color: #666; margin: 5px 0; font-size: 14px;">
+                            <i class="fas fa-map-marker-alt"></i> {{ property.get_area_display|default:property.area }} - {{ property.city }}
+                        </p>
+                        <div style="display: flex; gap: 15px; margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee; font-size: 14px;">
+                            <div>
+                                <i class="fas fa-bed"></i> <span style="color: #666;">{{ property.bedrooms }} BHK</span>
+                            </div>
+                            <div>
+                                <i class="fas fa-bath"></i> <span style="color: #666;">{{ property.bathrooms }} Bath</span>
+                            </div>
+                            <div>
+                                <i class="fas fa-ruler-combined"></i> <span style="color: #666;">{{ property.carpet_area }} sqft</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Latest Properties -->
+{% if latest_properties %}
+<section style="padding: 60px 20px; background: #f8f9fa;">
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
+            <h2 style="margin: 0; font-size: 32px;">Latest Properties</h2>
+            <a href="{% url 'property_list' %}" style="color: #667eea; text-decoration: none; font-weight: bold;">View All →</a>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px;">
+            {% for property in latest_properties %}
+            <a href="{% url 'property_detail' property.id %}" style="text-decoration: none; color: inherit;">
+                <div style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s;">
+                    <div style="position: relative; height: 250px; overflow: hidden;">
+                        {% if property.images.first %}
+                        <img src="{{ property.images.first.image.url }}" alt="{{ property.title }}" style="width: 100%; height: 100%; object-fit: cover;">
+                        {% else %}
+                        <img src="https://via.placeholder.com/280x250?text=No+Image" alt="{{ property.title }}" style="width: 100%; height: 100%; object-fit: cover;">
+                        {% endif %}
+                        <span style="position: absolute; top: 10px; right: 10px; background: #764ba2; color: white; padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: bold;">{{ property.get_listing_type_display }}</span>
+                        <span style="position: absolute; bottom: 10px; left: 10px; background: rgba(0,0,0,0.7); color: white; padding: 8px 15px; border-radius: 5px; font-size: 18px; font-weight: bold;">₹{{ property.price|floatformat:0|stringformat:".0f" }}</span>
+                    </div>
+                    <div style="padding: 20px;">
+                        <h3 style="margin: 0 0 10px 0; font-size: 18px; font-weight: bold;">{{ property.title|truncatechars:35 }}</h3>
+                        <p style="color: #666; margin: 5px 0; font-size: 14px;">
+                            <i class="fas fa-map-marker-alt"></i> {{ property.get_area_display|default:property.area }} - {{ property.city }}
+                        </p>
+                        <div style="display: flex; gap: 15px; margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee; font-size: 14px;">
+                            <div>
+                                <i class="fas fa-bed"></i> <span style="color: #666;">{{ property.bedrooms }} BHK</span>
+                            </div>
+                            <div>
+                                <i class="fas fa-bath"></i> <span style="color: #666;">{{ property.bathrooms }} Bath</span>
+                            </div>
+                            <div>
+                                <i class="fas fa-ruler-combined"></i> <span style="color: #666;">{{ property.carpet_area }} sqft</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- CTA Section -->
+<section style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 60px 20px; text-align: center;">
+    <div class="container">
+        <h2 style="font-size: 32px; margin-bottom: 20px;">Ready to Find Your Dream Property?</h2>
+        <p style="font-size: 18px; margin-bottom: 30px;">Browse through our extensive collection of properties and find the perfect one for you.</p>
+        <a href="{% url 'property_list' %}" style="background: white; color: #667eea; padding: 15px 40px; border-radius: 5px; text-decoration: none; font-weight: bold; font-size: 16px; display: inline-block;">Explore All Properties</a>
+    </div>
+</section>
+
+<script>
+    (function() {
+        const images = [
+            '{% static "real_estate_startup/chatgpt.png" %}',
+            '{% static "real_estate_startup/chatgpt2.PNG" %}',
+            '{% static "real_estate_startup/chatgpt3.png" %}'
+        ];
+
+        const imageElement = document.getElementById('heroSliderImage');
+        const prevButton = document.getElementById('sliderPrev');
+        const nextButton = document.getElementById('sliderNext');
+
+        let currentIndex = 0;
+        let autoSlideInterval = null;
+        const AUTO_SLIDE_DELAY = 2000;
+
+        function updateSlider(index, restart = true) {
+            currentIndex = (index + images.length) % images.length;
+            imageElement.style.opacity = '0';
+            setTimeout(() => {
+                imageElement.src = images[currentIndex];
+                imageElement.alt = `Hero image ${currentIndex + 1}`;
+                imageElement.style.opacity = '1';
+            }, 150);
+            if (restart) {
+                startAutoSlide();
+            }
+        }
+
+        function startAutoSlide() {
+            if (autoSlideInterval) {
+                clearInterval(autoSlideInterval);
+            }
+            autoSlideInterval = setInterval(() => {
+                updateSlider(currentIndex + 1, false);
+            }, AUTO_SLIDE_DELAY);
+        }
+
+        prevButton.addEventListener('click', () => updateSlider(currentIndex - 1));
+        nextButton.addEventListener('click', () => updateSlider(currentIndex + 1));
+
+        updateSlider(0, false);
+        startAutoSlide();
+    })();
+</script>
+
+{% endblock %}

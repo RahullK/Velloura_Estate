@@ -19,7 +19,7 @@
                     {% if property.images.first %}
                     <img id="mainImage" src="{{ property.images.first.image.url }}" alt="{{ property.title }}" style="width: 100%; height: 500px; object-fit: contain; background: #f4f6fb; border-radius: 10px; margin-bottom: 15px; cursor: pointer;" onclick="openImageModal(this.src)">
                     {% else %}
-                    <img id="mainImage" src="/static/real_estate_startup/chatgpt.png" alt="{{ property.title }}" style="width: 100%; height: 500px; object-fit: contain; background: #f4f6fb; border-radius: 10px; margin-bottom: 15px; cursor: pointer;" onclick="openImageModal(this.src)">
+                    <img id="mainImage" src="static/real_estate_startup/chatgpt.png" alt="{{ property.title }}" style="width: 100%; height: 500px; object-fit: contain; background: #f4f6fb; border-radius: 10px; margin-bottom: 15px; cursor: pointer;" onclick="openImageModal(this.src)">
                     {% endif %}
                     
                     <!-- Thumbnail Gallery -->

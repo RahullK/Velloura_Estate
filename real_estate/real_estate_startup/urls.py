@@ -8,4 +8,5 @@ urlpatterns = [
     path('property/<int:property_id>/inquiry/', views.submit_inquiry, name='submit_inquiry'),
     path('property/<int:property_id>/save/', views.toggle_save_property, name='toggle_save_property'),
     path('saved-properties/', views.saved_properties, name='saved_properties'),
+    path('about/', views.about, name='about'),
 ]

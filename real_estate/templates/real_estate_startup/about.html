@@ -1,0 +1,240 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home - Real Estate Portal - Find Your Dream Property{% endblock %}
+
+{% block extra_css %}
+    <style>
+        :root {
+            --bg: #eef5ff;
+            --surface: rgba(255,255,255,0.92);
+            --surface-strong: #fff;
+            --text: #14213d;
+            --muted: #55617a;
+            --accent: #2563eb;
+            --accent-soft: rgba(37,99,235,0.12);
+            --border: rgba(20,34,61,0.12);
+            --shadow: 0 28px 80px rgba(20,34,61,0.08);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at top left, rgba(37,99,235,0.18), transparent 25%),
+                        radial-gradient(circle at bottom right, rgba(14,165,233,0.14), transparent 24%),
+                        var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .container { max-width: 1180px; margin: 0 auto; padding: 48px 24px 80px; }
+
+        .team-hero {
+            padding: 38px 32px; margin-bottom: 36px; border-radius: 32px;
+            background: linear-gradient(135deg, rgba(37,99,235,0.14), rgba(255,255,255,0.92));
+            border: 1px solid rgba(255,255,255,0.9); box-shadow: 0 24px 60px rgba(15,23,42,0.08);
+            position: relative; overflow: hidden;
+        }
+        .team-hero::after { content:""; position:absolute; width:360px; height:360px; border-radius:50%; background:rgba(37,99,235,0.12); top:-120px; right:-90px; filter:blur(10px); pointer-events:none; }
+        .team-hero::before { content:""; position:absolute; width:240px; height:240px; border-radius:50%; background:rgba(14,165,233,0.1); bottom:-90px; left:-60px; filter:blur(12px); pointer-events:none; }
+
+        .section-heading { position:relative; z-index:1; text-align:center; max-width:760px; margin:0 auto; }
+        .section-heading h1 { font-size:clamp(2.4rem,4vw,3.4rem); margin-bottom:18px; font-weight:800; letter-spacing:-0.04em; line-height:1.05; }
+        .section-heading p { font-size:1rem; color:var(--muted); max-width:640px; margin:0 auto; line-height:1.75; }
+
+        /* CEO feature card */
+        .ceo-card {
+            display: grid;
+            grid-template-columns: 420px 1fr;
+            gap: 28px;
+            align-items: center;
+            background: var(--surface-strong);
+            border-radius: 28px;
+            padding: 22px;
+            border: 1px solid var(--border);
+            box-shadow: 0 36px 100px rgba(20,34,61,0.10);
+            margin-bottom: 36px;
+        }
+        /* .ceo-image { height:420px; border-radius:14px; overflow:hidden; position:relative; }
+        .ceo-image img {
+            width: 100%;
+            height: 100%;
+            /* min-width: 100%;
+            min-height: 100%; */
+            /* object-fit: cover;
+            object-position: center;
+            display: block;
+            transition: transform .6s ease;
+        } */ 
+        .ceo-image {
+           width: 100%;
+           height: 500px;
+           border-radius: 18px;
+           overflow: hidden;
+           background: #f3f4f6;
+           display: flex;
+           align-items: center;
+           justify-content: center;
+            }       
+        
+       .ceo-image img {
+           width: 100%;
+           height: 100%;
+           object-fit: contain;
+           object-position: center center;
+           display: block;
+           transition: transform .6s ease;
+        }       
+        
+       .ceo-card:hover .ceo-image img {
+           transform: scale(1.02);
+        }       
+        .ceo-card:hover .ceo-image img { transform: scale(1.04); }
+        .ceo-content h3 { font-size:1.8rem; margin-bottom:8px; color:var(--text); }
+        .ceo-role { display:inline-block; padding:10px 14px; border-radius:999px; background:var(--accent-soft); color:var(--accent); font-weight:700; margin-bottom:12px; }
+        .ceo-content p { color:var(--muted); line-height:1.7; font-size:1rem; }
+
+        .ceo-ctas { margin-top:18px; display:flex; gap:12px; flex-wrap:wrap; }
+        .btn { padding:10px 16px; border-radius:12px; text-decoration:none; font-weight:700; }
+        .btn-primary { background:var(--accent); color:#fff; box-shadow: 0 12px 30px rgba(37,99,235,0.12); }
+        .btn-ghost { background:transparent; border:1px solid rgba(20,34,61,0.06); color:var(--text); }
+
+        /* team grid (four cards) */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 26px;
+        }
+
+        .team-card {
+            background: var(--surface-strong);
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            transition: transform 0.28s ease, box-shadow 0.28s ease;
+            display: grid;
+            grid-template-rows: auto 1fr;
+            min-height: 520px;
+        }
+        .team-card:hover { transform: translateY(-12px); box-shadow: 0 40px 110px rgba(20,34,61,0.14); }
+
+        .team-image-wrap { position: relative; width: 100%; min-height: 340px; overflow: hidden; }
+        .team-image-wrap img { width: 100%; height: 100%; min-width:100%; min-height:100%; object-fit: cover; object-position:center; display: block; transition: transform 0.35s ease; }
+        .team-card:hover .team-image-wrap img { transform: scale(1.06); }
+        .team-image-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(15,23,42,0) 30%, rgba(15,23,42,0.45) 100%); }
+
+        .team-content { padding: 28px; display: flex; flex-direction: column; gap: 12px; }
+        .team-content h3 { font-size: 1.28rem; margin-bottom: 6px; color: var(--text); }
+        .team-role { display:inline-flex; padding:8px 12px; border-radius:999px; background:var(--accent-soft); color:var(--accent); font-weight:700; font-size:0.86rem; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:6px; }
+        .team-content p { color: var(--muted); font-size: 0.98rem; line-height:1.7; flex:1; }
+
+        .team-badge { position:absolute; bottom:16px; left:16px; padding:8px 12px; border-radius:999px; background: rgba(255,255,255,0.92); color:var(--text); font-weight:700; box-shadow:0 12px 26px rgba(15,23,42,0.12); }
+
+        @media (max-width: 1100px) {
+            .team-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+            .ceo-card { grid-template-columns: 1fr; }
+            .ceo-image { height: 360px; }
+            .team-image-wrap { min-height: 300px; }
+        }
+        @media (max-width: 680px) {
+            .team-grid { grid-template-columns: 1fr; }
+            .ceo-image { height: 260px; }
+            .team-card { min-height: 480px; }
+            .container { padding: 32px 16px 60px; }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <section class="team-hero">
+            <div class="section-heading">
+                <h1>Meet Our Leadership Team</h1>
+                <p>These leaders combine market expertise, operational strength, and client-centered strategy to deliver practical results.</p>
+            </div>
+        </section>
+
+        <!-- CEO card above -->
+        <article class="ceo-card" aria-label="Chief Executive Officer">
+            <div class="ceo-image">
+                <img src="{% static 'real_estate_startup/Aman.png' %}"  alt="Aman Kapoor — Chief Executive Officer" />
+            </div>
+            <div class="ceo-content">
+                <span class="ceo-role">Chief Executive Officer</span>
+                <h3>Aman Kalal</h3>
+                <!-- <p>At the heart of our organization is a vision to transform the way real estate partnerships are built. As the Founder & CEO, I believe that success is driven by integrity, innovation, and an unwavering commitment to excellence.
+                </p>With deep market knowledge and a passion for delivering exceptional results, I have built this company to serve as a trusted mandate partner for developers, investors, channel partners, and homebuyers. Our approach goes beyond conventional sales—we create strategic growth opportunities, strengthen brand value, and maximize project success through data-driven marketing, powerful sales execution, and long-term relationship building.
+                Every project we represent reflects our commitment to professionalism, transparency, and quality.<p> We work with a clear purpose: to help developers achieve outstanding sales performance while ensuring buyers make informed and confident investment decisions.
+                Our vision is to establish one of India's most respected and trusted real estate mandate firms, recognized for delivering excellence, creating lasting value, and setting new industry benchmarks.
+                </p>"Success in real estate is not measured by the number of properties sold—it is measured by the trust we build, the relationships we nurture, and the value we create."
+                </p> -->
+                 <p>At the heart of our organization is a vision to transform the way real estate partnerships are built. As the Founder & CEO, I believe that success is driven by integrity, innovation, and an unwavering commitment to excellence.</p>
+ <p>With deep market knowledge and a passion for delivering exceptional results, I have built this company to serve as a trusted mandate partner for developers, investors, channel partners, and homebuyers. Our approach goes beyond conventional sales—we create strategic growth opportunities, strengthen brand value, and maximize project success through data-driven marketing, powerful sales execution, and long-term relationship building.</p>
+<p>Every project we represent reflects our commitment to professionalism, transparency, and quality.<p> We work with a clear purpose: to help developers achieve outstanding sales performance while ensuring buyers make informed and confident investment decisions.</p>
+<p>Our vision is to establish one of India's most respected and trusted real estate mandate firms, recognized for delivering excellence, creating lasting value, and setting new industry benchmarks.</p>
+<p>"Success in real estate is not measured by the number of properties sold—it is measured by the trust we build, the relationships we nurture, and the value we create."</p>
+                <div class="ceo-ctas">
+                    <!-- <a href="mailto:aman@example.com" class="btn btn-primary">Contact</a> -->
+                    <!-- <a href="#" class="btn btn-ghost">View Profile</a> -->
+                </div>
+            </div>
+        </article>
+
+        <!-- Four people below -->
+        <div class="team-grid" aria-label="Leadership team">
+            <div class="team-card">
+                <div class="team-image-wrap">
+                    <img src="{% static 'real_estate_startup/Sonali.png' %}" alt="Sarah Williams, Operations Director" />
+                    <span class="team-badge">Co-Founder</span>
+                    <div class="team-image-overlay"></div>
+                </div>
+                <div class="team-content">
+                    <h3>Sonali</h3>
+                    <span class="team-role">Co-Founder</span>
+                    <p>As a Co-Founder, I am driven by a vision to build a company that stands for trust, innovation, and sustainable growth. My focus is on developing strategic partnerships, identifying new business opportunities, and ensuring every project achieves its maximum potential.I believe that strong relationships, market intelligence, and ethical business practices are the foundation of long-term success. With a commitment to excellence, I work towards creating value for developers, investors, channel partners, and homebuyers while contributing to the company's continued growth and industry leadership.</p>
+                </div>
+            </div>
+
+            <div class="team-card">
+                <div class="team-image-wrap">
+                    <img src="{% static 'real_estate_startup/Mahaveer.png' %}" alt="Michael Chen, Head of Sales" />
+                    <span class="team-badge">Co-Founder</span>
+                    <div class="team-image-overlay"></div>
+                </div>
+                <div class="team-content">
+                    <h3>Mahaveer</h3>
+                    <span class="team-role">Co-Founder</span>
+                    <p>With a passion for real estate and a results-oriented mindset, I lead the company's sales strategy and channel partner network. My objective is to create high-performing sales systems that deliver exceptional value to developers while ensuring a seamless experience for every customer.By combining market expertise with a customer-centric approach, I strive to build lasting relationships, drive consistent growth, and establish our company as a trusted name in the real estate industry.</p>
+                </div>
+            </div>
+
+            <div class="team-card">
+                <div class="team-image-wrap">
+                    <img src="{% static 'real_estate_startup/Vishal.jpeg' %}" alt="Emily Roberts, Client Relations Manager" />
+                    <span class="team-badge">Co-Founder</span>
+                    <div class="team-image-overlay"></div>
+                </div>
+                <div class="team-content">
+                    <h3>Vishal</h3>
+                    <span class="team-role">Co-Founder</span>
+                    <p>As a Co-Founder, I oversee the company's marketing, branding, and business development initiatives. My vision is to position every project with a unique market identity through innovative campaigns, digital excellence, and strategic planning.I believe that a strong brand is built through consistency, creativity, and trust. My focus is on enhancing market presence, generating quality opportunities, and delivering measurable results that create long-term value for our partners and clients.</p>
+                </div>
+            </div>
+
+            <div class="team-card">
+                <div class="team-image-wrap">
+                    <img src="{% static 'real_estate_startup/Sumit_Bhai.png' %}" alt="Lucas Zhang, Investment Advisor" />
+                    <span class="team-badge">Co-Founder</span>
+                    <div class="team-image-overlay"></div>
+                </div>
+                <div class="team-content">
+                    <h3>Sumeet</h3>
+                    <span class="team-role">Co-Founder</span>
+                    <p>I am committed to ensuring operational excellence and delivering an outstanding client experience across every stage of the business. My focus is on streamlining processes, maintaining the highest standards of professionalism, and building long-term relationships founded on trust and transparency.Through efficient execution, attention to detail, and a client-first philosophy, I work to ensure that every partnership reflects our commitment to quality, integrity, and excellence.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

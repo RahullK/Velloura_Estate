@@ -263,3 +263,7 @@ def submit_inquiry(request, property_id):
     
     return redirect('property_list')
 
+
+
+def about(request):
+    return render(request, 'real_estate_startup/about.html', {'page_title': 'About Us'})

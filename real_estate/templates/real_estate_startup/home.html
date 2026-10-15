@@ -68,11 +68,20 @@
 .hero-slider .slider-caption {
     display: none;
 }
+.home-search-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) 150px;
+    gap: 15px;
+    margin-bottom: 20px;
+}
 @media (max-width: 768px) {
     .hero-slider .slider-nav {
         width: 38px;
         height: 38px;
         font-size: 1.2rem;
+    }
+    .home-search-grid {
+        grid-template-columns: 1fr;
     }
 }
 </style>
@@ -120,7 +129,7 @@
     <div class="container">
         <!-- Main Search Form -->
         <form method="GET" action="{% url 'property_list' %}" style="background: rgba(255,255,255,0.95); border: 1px solid rgba(204,204,204,0.6); padding: 30px; border-radius: 20px; max-width: 1200px; margin: 0 auto;">
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 150px; gap: 15px; margin-bottom: 20px;">
+            <div class="home-search-grid">
                 <div>
                     <input type="text" name="q" placeholder="Search by location or property" style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; background: white;">
                 </div>
